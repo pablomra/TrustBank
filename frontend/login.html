@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Secure Banking Login | TrustBank</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <style>
+        .transition-all-300 { transition: all 0.3s ease-in-out; }
+        body {
+            background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body class="font-sans text-slate-800">
+    <main class="w-full max-w-md px-6 py-12">
+        <header class="text-center mb-8">
+            <div class="flex justify-center mb-4">
+                <div class="w-16 h-16 bg-emerald-600 rounded-xl flex items-center justify-center shadow-lg">
+                    <svg class="h-10 w-10 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                    </svg>
+                </div>
+            </div>
+            <h1 class="text-3xl font-bold text-slate-900 tracking-tight">TrustBank</h1>
+            <p class="text-slate-600 mt-2">Acceso Seguro a su Banca Digital</p>
+        </header>
+
+        <section class="bg-white rounded-2xl shadow-xl p-8 border border-slate-100">
+            <div id="error-alert" class="hidden mb-4 p-3 bg-red-100 text-red-700 text-sm rounded-lg"></div>
+            <form id="login-form" class="space-y-6">
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2" for="username">Usuario</label>
+                    <input class="block w-full px-3 py-3 border border-slate-300 rounded-lg bg-slate-50 focus:ring-2 focus:ring-emerald-500 transition-all-300" id="username" name="username" placeholder="admin" required type="text" />
+                </div>
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="block text-sm font-semibold text-slate-700" for="password">Contraseña</label>
+                        <a class="text-xs font-medium text-emerald-600 hover:text-emerald-800" href="#">¿Olvidó su contraseña?</a>
+                    </div>
+                    <input class="block w-full px-3 py-3 border border-slate-300 rounded-lg bg-slate-50 focus:ring-2 focus:ring-emerald-500 transition-all-300" id="password" name="password" placeholder="••••••••" required type="password" />
+                </div>
+                <div class="pt-2">
+                    <button class="w-full bg-[#10b981] hover:bg-emerald-600 text-white font-bold py-3 px-4 rounded-lg shadow-md transition-all-300" type="submit">
+                        Ingresar
+                    </button>
+                </div>
+            </form>
+        </section>
+    </main>
+    <script type="module" src="./src/login_handler.js"></script>
+</body>
+</html>

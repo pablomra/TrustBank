@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    container_name: bank-db
+    restart: always
+    environment:
+      POSTGRES_USER: bankuser
+      POSTGRES_PASSWORD: bankpassword
+      POSTGRES_DB: bankdb
+    volumes:
+      - ./database:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+
+  backend:
+    build: ./backend
+    container_name: bank-backend
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      DB_HOST: db
+      DB_USER: bankuser
+      DB_PASSWORD: bankpassword
+      DB_NAME: bankdb
+      DB_PORT: 5432
+    depends_on:
+      - db
+
+  frontend:
+    build: ./frontend
+    container_name: bank-frontend
+    restart: always
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend

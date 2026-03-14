@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Pagos - Portal Bancario</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { primary: "#10b981", "background-light": "#f8f6f6", "background-dark": "#06130e" },
+                    fontFamily: { "display": ["Public Sans"] }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background-light text-slate-900 font-display">
+    <div class="flex h-screen overflow-hidden">
+        <aside class="w-64 flex-shrink-0 border-r border-slate-200 bg-white flex flex-col justify-between p-4">
+            <div class="flex flex-col gap-6">
+                <div class="flex items-center gap-3 px-2">
+                    <div class="bg-primary size-10 rounded-xl flex items-center justify-center text-white">
+                        <span class="material-symbols-outlined text-2xl">payments</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <h1 class="text-slate-900 text-lg font-bold leading-none">Pagos</h1>
+                        <p class="text-slate-500 text-xs">Portal Bancario</p>
+                    </div>
+                </div>
+                <nav class="flex flex-col gap-1">
+                    <a class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 hover:bg-slate-100" href="/accounts.html">
+                        <span class="material-symbols-outlined">dashboard</span>
+                        <span class="text-sm font-medium">Dashboard</span>
+                    </a>
+                    <a class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 hover:bg-slate-100" href="/cards.html">
+                        <span class="material-symbols-outlined">credit_card</span>
+                        <span class="text-sm font-medium">Tarjetas</span>
+                    </a>
+                    <a class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 hover:bg-slate-100" href="/transfers.html">
+                        <span class="material-symbols-outlined">swap_horiz</span>
+                        <span class="text-sm font-medium">Transferencias</span>
+                    </a>
+                    <a class="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-primary/10 text-primary" href="/payments.html">
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">payments</span>
+                        <span class="text-sm font-bold">Pagos</span>
+                    </a>
+                    <a class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 hover:bg-slate-100" href="/investments.html">
+                        <span class="material-symbols-outlined">trending_up</span>
+                        <span class="text-sm font-medium">Inversiones</span>
+                    </a>
+                </nav>
+            </div>
+            <div class="p-4 border-t border-slate-200">
+                <div class="flex items-center gap-3 px-2">
+                    <div id="user-initials" class="size-8 rounded-full bg-slate-200 flex items-center justify-center font-bold text-xs">JD</div>
+                    <div class="flex flex-col overflow-hidden">
+                        <p id="user-name" class="text-sm font-semibold truncate">Cargando...</p>
+                        <p id="logout-btn" class="text-xs text-primary cursor-pointer hover:underline">Cerrar Sesión</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <main class="flex-1 flex flex-col overflow-y-auto">
+            <header class="flex items-center justify-between px-8 py-4 bg-white/50 backdrop-blur-md border-b border-slate-200 sticky top-0 z-10">
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary">payments</span>
+                    <h2 class="text-xl font-bold tracking-tight">Pagos & Servicios</h2>
+                </div>
+            </header>
+            
+            <div class="p-8 max-w-6xl mx-auto w-full flex flex-col gap-8">
+                <div>
+                    <h1 class="text-3xl font-black text-slate-900">Pagar Servicios</h1>
+                    <p class="text-slate-500 mt-1">Administra tus cuentas recurrentes en un solo lugar.</p>
+                </div>
+
+                <!-- Categories -->
+                <section>
+                    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                        <div class="bg-white p-4 rounded-2xl border border-slate-100 flex flex-col items-center gap-2 text-center hover:shadow-md transition-all cursor-pointer group">
+                            <div class="size-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 group-hover:bg-primary group-hover:text-white transition-colors">
+                                <span class="material-symbols-outlined">water_drop</span>
+                            </div>
+                            <span class="text-sm font-semibold">Agua</span>
+                        </div>
+                        <div class="bg-white p-4 rounded-2xl border border-slate-100 flex flex-col items-center gap-2 text-center hover:shadow-md transition-all cursor-pointer group">
+                            <div class="size-12 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 group-hover:bg-primary group-hover:text-white transition-colors">
+                                <span class="material-symbols-outlined">bolt</span>
+                            </div>
+                            <span class="text-sm font-semibold">Electricidad</span>
+                        </div>
+                        <div class="bg-white p-4 rounded-2xl border border-slate-100 flex flex-col items-center gap-2 text-center hover:shadow-md transition-all cursor-pointer group">
+                            <div class="size-12 rounded-full bg-green-100 flex items-center justify-center text-green-600 group-hover:bg-primary group-hover:text-white transition-colors">
+                                <span class="material-symbols-outlined">router</span>
+                            </div>
+                            <span class="text-sm font-semibold">Internet</span>
+                        </div>
+                        <div class="bg-white p-4 rounded-2xl border border-slate-100 flex flex-col items-center gap-2 text-center hover:shadow-md transition-all cursor-pointer group">
+                            <div class="size-12 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 group-hover:bg-primary group-hover:text-white transition-colors">
+                                <span class="material-symbols-outlined">tv_gen</span>
+                            </div>
+                            <span class="text-sm font-semibold">Streaming</span>
+                        </div>
+                        <div class="bg-white p-4 rounded-2xl border border-slate-100 flex flex-col items-center gap-2 text-center hover:shadow-md transition-all cursor-pointer group">
+                            <div class="size-12 rounded-full bg-red-100 flex items-center justify-center text-red-600 group-hover:bg-primary group-hover:text-white transition-colors">
+                                <span class="material-symbols-outlined">gas_meter</span>
+                            </div>
+                            <span class="text-sm font-semibold">Gas</span>
+                        </div>
+                        <div class="bg-white p-4 rounded-2xl border border-slate-100 flex flex-col items-center gap-2 text-center hover:shadow-md transition-all cursor-pointer group">
+                            <div class="size-12 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 group-hover:bg-primary group-hover:text-white transition-colors">
+                                <span class="material-symbols-outlined">more_horiz</span>
+                            </div>
+                            <span class="text-sm font-semibold">Otros</span>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="grid lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-2 flex flex-col gap-4">
+                        <h3 class="text-lg font-bold">Próximos Pagos</h3>
+                        <div id="payments-list" class="space-y-3">
+                            <!-- Dynamically populated -->
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col gap-6">
+                        <div class="bg-primary p-6 rounded-3xl text-white shadow-lg shadow-primary/20">
+                            <h4 class="text-white/80 text-sm font-medium">Total Servicios Mensual</h4>
+                            <div class="text-3xl font-black mt-1">$236.70</div>
+                            <div class="mt-4 pt-4 border-t border-white/20 flex justify-between items-end">
+                                <div>
+                                    <p class="text-xs text-white/70">Pendiente este mes</p>
+                                    <p class="font-bold">$126.70</p>
+                                </div>
+                                <div class="size-10 bg-white/20 rounded-full flex items-center justify-center">
+                                    <span class="material-symbols-outlined">insights</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script type="module" src="./src/payments_handler.js"></script>
+</body>
+</html>

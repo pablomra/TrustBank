@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Mis Cuentas - Portal Bancario</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { primary: "#10b981", "background-light": "#f8f6f6", "background-dark": "#0b120f" },
+                    fontFamily: { "display": ["Public Sans"] }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background-light text-slate-900 font-display min-h-screen">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <aside class="w-64 flex-shrink-0 border-r border-slate-200 bg-white flex flex-col justify-between p-4">
+            <div class="flex flex-col gap-6">
+                <div class="flex items-center gap-3 px-2">
+                    <div class="bg-primary size-10 rounded-xl flex items-center justify-center text-white">
+                        <span class="material-symbols-outlined text-2xl">account_balance</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <h1 class="text-slate-900 text-lg font-bold leading-none">Mi Banco</h1>
+                        <p class="text-slate-500 text-xs">Portal Bancario</p>
+                    </div>
+                </div>
+                <nav class="flex flex-col gap-1">
+                    <a class="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-primary/10 text-primary" href="/accounts.html">
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">dashboard</span>
+                        <span class="text-sm font-bold">Mis Cuentas</span>
+                    </a>
+                    <a class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 hover:bg-slate-100" href="/cards.html">
+                        <span class="material-symbols-outlined">credit_card</span>
+                        <span class="text-sm font-medium">Tarjetas</span>
+                    </a>
+                    <a class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 hover:bg-slate-100" href="/transfers.html">
+                        <span class="material-symbols-outlined">swap_horiz</span>
+                        <span class="text-sm font-medium">Transferencias</span>
+                    </a>
+                </nav>
+            </div>
+            <div class="p-4 border-t border-slate-200">
+                <div class="flex items-center gap-3 px-2">
+                    <div id="user-initials" class="size-8 rounded-full bg-slate-200 flex items-center justify-center font-bold text-xs uppercase">JD</div>
+                    <div class="flex flex-col overflow-hidden">
+                        <p id="user-name" class="text-sm font-semibold truncate">Cargando...</p>
+                        <p id="logout-btn" class="text-xs text-primary cursor-pointer hover:underline">Cerrar Sesión</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <main class="flex-1 overflow-y-auto">
+            <header class="bg-white border-b border-gray-200 px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 sticky top-0 z-10">
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">Mis Cuentas</h2>
+                    <p class="text-sm text-gray-500">Resumen general de tus productos</p>
+                </div>
+                <div class="w-full md:w-72">
+                    <select data-testid="account-selector" id="account-selector" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-emerald-500 focus:border-emerald-500 block p-2.5 shadow-sm"></select>
+                </div>
+            </header>
+
+            <section class="p-8 space-y-8 max-w-7xl mx-auto">
+                <!-- Alerts Container -->
+                <div id="error-message" data-testid="error-message" class="hidden">
+                    <div class="bg-red-50 border-l-4 border-red-400 p-4 rounded-r-xl">
+                        <div class="flex items-center">
+                            <span class="material-symbols-outlined text-red-400 mr-2">error</span>
+                            <p id="error-text" class="text-sm text-red-700 font-medium"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Balance Card -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 flex flex-col md:flex-row justify-between items-start md:items-center">
+                    <div class="space-y-1">
+                        <h3 class="text-xs font-bold text-gray-400 uppercase tracking-widest">Saldo Disponible</h3>
+                        <div class="flex items-baseline space-x-2">
+                            <span id="balance-amount" data-testid="balance-amount" class="text-5xl font-black text-slate-900">$0</span>
+                            <span class="text-xl font-bold text-gray-400 uppercase">clp</span>
+                        </div>
+                        <p class="text-xs text-gray-400 mt-2">Actualizado: <span id="balance-date" data-testid="balance-date" class="font-medium text-slate-500"></span></p>
+                    </div>
+                    <div class="mt-6 md:mt-0 flex items-center space-x-4">
+                        <div id="loading-spinner" data-testid="loading-spinner" class="hidden animate-spin rounded-full h-5 w-5 border-b-2 border-primary"></div>
+                        <button id="refresh-button" data-testid="refresh-button" class="inline-flex items-center px-6 py-3 text-sm font-bold text-primary bg-primary/10 rounded-xl hover:bg-primary/20 transition-all disabled:opacity-50">
+                            Actualizar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Transactions Table -->
+                <div id="transactions-container" class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                    <div class="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
+                        <h3 class="text-lg font-bold text-gray-800">Últimos Movimientos</h3>
+                    </div>
+                    
+                    <div id="empty-state-message" data-testid="empty-state-message" class="hidden p-12 text-center">
+                        <span class="material-symbols-outlined text-6xl text-gray-200 mb-2">history_toggle_off</span>
+                        <p class="text-gray-500 font-medium">No hay movimientos recientes para esta cuenta.</p>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table data-testid="transactions-table" id="transactions-table" class="w-full text-left border-collapse">
+                            <thead class="bg-gray-50/50 border-b border-gray-100">
+                                <tr>
+                                    <th class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-widest">Fecha</th>
+                                    <th class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-widest">Descripción</th>
+                                    <th class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-widest">Monto</th>
+                                    <th class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-widest text-right">Saldo</th>
+                                </tr>
+                            </thead>
+                            <tbody id="transactions-body" class="divide-y divide-gray-100"></tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="px-6 py-4 bg-gray-50 border-t border-gray-100 flex items-center justify-between">
+                        <span data-testid="pagination-indicator" id="pagination-indicator" class="text-xs font-bold text-gray-400 uppercase tracking-widest">Página 1 de 1</span>
+                        <div class="flex gap-2">
+                            <button id="pagination-prev" data-testid="pagination-prev" class="p-2 border border-gray-200 rounded-lg hover:bg-white disabled:opacity-30 transition-all">
+                                <span class="material-symbols-outlined text-sm">chevron_left</span>
+                            </button>
+                            <button id="pagination-next" data-testid="pagination-next" class="p-2 border border-gray-200 rounded-lg hover:bg-white disabled:opacity-30 transition-all">
+                                <span class="material-symbols-outlined text-sm">chevron_right</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script type="module" src="./src/accounts_handler.js?v=2"></script>
+</body>
+</html>
