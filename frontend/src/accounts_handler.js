@@ -18,7 +18,7 @@ async function loadAccountData() {
         // Enmascaramiento: "Cuenta Corriente ***1123" (HU-012 STRICT)
         selector.innerHTML = accounts.map(acc => {
             const last4 = acc.account_number.slice(-4);
-            return `<option value="${acc.id}">${acc.account_type} ***${last4}</option>`;
+            return `<option value="${acc.id}">${acc.account_type} ****${last4}</option>`;
         }).join('');
 
         // Selección inicial
@@ -128,7 +128,7 @@ function renderTransactions() {
         </tr>
     `).join('');
 
-    if (indicator) indicator.textContent = `Página ${currentPage} de ${totalPages}`;
+    if (indicator) indicator.textContent = `PÁGINA ${currentPage} DE ${totalPages}`;
     if (prevBtn) prevBtn.disabled = currentPage === 1;
     if (nextBtn) nextBtn.disabled = currentPage === totalPages;
 }
